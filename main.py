@@ -1,12 +1,15 @@
+# Import packages
 import csv
 import os.path
 import random
 import win32print
 import win32api
 
+# Declare lists
 names = []
 numbers = []
 
+# Checks for if names.csv exists, and uses the values in it if it does. Creates a new file and fills it if not.
 if os.path.isfile('names.csv') == True:
     with open('names.csv', 'r') as csvfile:
         csvreader = csv.reader(csvfile)
@@ -21,6 +24,7 @@ else:
         csvwriter = csv.writer(f)
         csvwriter.writerow(names)
 
+# Checks for if numbers.csv exists, and uses the values in it if it does. Creates a new file and fills it if not.
 if os.path.isfile('numbers.csv') == True:
     with open('numbers.csv', 'r') as csvfile:
         csvreader = csv.reader(csvfile)
@@ -38,6 +42,7 @@ else:
         csvwriter = csv.writer(f)
         csvwriter.writerow(numbers)
 
+# Combine both lists into a dictionary
 dict = {names[i]: numbers[i] for i in range(len(names))}
 sortedDict = sorted(dict.items(), key=lambda item: item[1])
 with open("output.md", "w") as f:
@@ -46,8 +51,10 @@ with open("output.md", "w") as f:
         print(value, ': ', key, file=f)
         print(value, ': ', key)
 
+# Asks the user if they would like to print these results to the default printer.
 printResults = input('Do you want to print these results? (y/n): ').lower().strip() == 'y'
 
+# Prints the results to the system default printer if requested.
 if printResults is True:
     printer_name = win32print.GetDefaultPrinter()
     hPrinter = win32print.OpenPrinter(printer_name)
