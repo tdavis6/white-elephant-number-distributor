@@ -40,8 +40,8 @@ else:
 
 dict = {names[i]: numbers[i] for i in range(len(names))}
 sortedDict = sorted(dict.items(), key=lambda item: item[1])
-with open("output.txt", "w") as f:
-    print("White Elephant Number Distribution", file=f)
+with open("output.md", "w") as f:
+    print("# White Elephant Number Distribution", file=f)
     for key, value in sortedDict:
         print(value, ': ', key, file=f)
         print(value, ': ', key)
@@ -51,7 +51,7 @@ printResults = input('Do you want to print these results? (y/n): ').lower().stri
 if printResults is True:
     printer_name = win32print.GetDefaultPrinter()
     hPrinter = win32print.OpenPrinter(printer_name)
-    filename = "output.txt"
+    filename = "output.md"
     try:
         hJob = win32print.StartDocPrinter(hPrinter, 1, ('PrintJobName', None, 'RAW'))
         try:
