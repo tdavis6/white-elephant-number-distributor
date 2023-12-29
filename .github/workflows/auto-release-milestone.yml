@@ -1,4 +1,4 @@
-name: Test
+name: auto-release-milestone
 on:
   milestone:
     types: [closed]
