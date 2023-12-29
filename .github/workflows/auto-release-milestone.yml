@@ -4,14 +4,32 @@ on:
     types: [closed]
 jobs:
   release:
-    name: Release
-    runs-on: ubuntu-latest
+    name: "Release"
+
+    runs-on: "ubuntu-latest"
+
     steps:
-      - name: Create a release draft for a milestone
-        id: create-release-milestone
-        uses: ecampidoglio/auto-release-milestone@v1
+      - name: "Determine tag"
+        run: "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
+
+      - name: "Create release"
+        uses: "actions/github-script@v6"
         with:
-          repo-token: ${{ secrets.TOKEN }}
-      - name: Print the URL of the release draft
-        if: steps.create-release-milestone.outputs.release-url != ''
-        run: echo ${{ steps.create-release-draft.outputs.release-url }}
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            try {
+              const response = await github.rest.repos.createRelease({
+                draft: false,
+                generate_release_notes: true,
+                name: process.env.RELEASE_TAG,
+                owner: context.repo.owner,
+                prerelease: false,
+                repo: context.repo.repo,
+                tag_name: process.env.RELEASE_TAG,
+              });
+
+              core.exportVariable('RELEASE_ID', response.data.id);
+              core.exportVariable('RELEASE_UPLOAD_URL', response.data.upload_url);
+            } catch (error) {
+              core.setFailed(error.message);
+            }
