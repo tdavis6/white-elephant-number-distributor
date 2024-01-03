@@ -59,7 +59,7 @@ else:
 dict = {names[i]: numbers[i] for i in range(len(names))}
 sortedDict = sorted(dict.items(), key=lambda item: item[1])
 with open(outputFileName, "w") as f:
-    print("# White Elephant Number Distribution", file=f)
+    print("White Elephant Number Distribution", file=f)
     print("These are the generated values.")
     for key, value in sortedDict:
         print(value, ': ', key, file=f)
