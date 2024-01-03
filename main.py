@@ -69,7 +69,7 @@ if printResults is True:
     hPrinter = win32print.OpenPrinter(printer_name)
     filename = outputFileName
     try:
-        hJob = win32print.StartDocPrinter(hPrinter, 1, ('PrintJobName', None, 'TEXT'))
+        hJob = win32print.StartDocPrinter(hPrinter, 1, ('PrintJobName', None, 'RAW'))
         try:
            win32api.ShellExecute(0, "print", filename, None, ".", 0)
         finally:
