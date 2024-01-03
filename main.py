@@ -72,11 +72,11 @@ printResults = input('\nDo you want to print these results? (y/n): ').lower().st
 if printResults is True:
     printer_name = win32print.GetDefaultPrinter()
     hPrinter = win32print.OpenPrinter(printer_name)
-    filename = outputFileName
+    filename = "output.txt"
     try:
         hJob = win32print.StartDocPrinter(hPrinter, 1, ('PrintJobName', None, 'RAW'))
         try:
-           win32api.ShellExecute(0, "print", filename, None, ".", 0)
+           win32api.ShellExecute(0, "print", filename, None, "./white-elephant-number-distributor", 0)
         finally:
             win32print.EndDocPrinter(hPrinter)
     finally:
